@@ -1,3 +1,6 @@
+// this configuration emulates the real loading of `extensions.json` and
+// maps the extension files (running with `npm run ext:start`) to the `/extension/` path
+
 const webpackConfig = require("../../webpack.config");
 const { name } = require('../../config');
 
