@@ -6,7 +6,7 @@ Quick Start
 
 Clone the repository with the --recursive option to automatically clone submodules:
 
-`git clone --recursive undefined`
+`git clone --recursive https://github.com/geosolutions-it/MapStoreExtension`
 
 Install NodeJS >= 7.10.0 , if needed, from [here](https://nodejs.org/en/download/releases/).
 
