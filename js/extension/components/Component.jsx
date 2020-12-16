@@ -1,6 +1,6 @@
 import React from "react";
 import Message from "@mapstore/components/I18N/Message";
-
+import src from "../assets/markers_default.png";
 const Extension = ({ value = 0, onIncrease, changeZoomLevel }) => {
     return (<div id="SAMPLE_EXTENSION" >
         <h2>Extension Sample</h2>
@@ -14,6 +14,8 @@ const Extension = ({ value = 0, onIncrease, changeZoomLevel }) => {
         <h3>Core action</h3>
         This button should change the zoom level to "1"
         <button onClick={() => { changeZoomLevel(1); }}>zoom to level 1</button>
+        Here a sample image with several markers:
+        <img src={src}/>
     </div>);
 };
 

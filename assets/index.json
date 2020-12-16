@@ -3,7 +3,7 @@
     {
       "name": "SampleExtension",
       "dependencies": [
-        "Toolbar"
+        "BurgerMenu"
       ]
     }
   ]
