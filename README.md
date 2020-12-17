@@ -7,7 +7,9 @@ It is basically a MapStore project you can run to test your extension and it con
 
 Clone the repository with the --recursive option to automatically clone submodules.
 
-Install NodeJS >= 12 , if needed, from [here](https://nodejs.org/en/download/releases/).
+`git clone --recursive https://github.com/geosolutions-it/MapStoreExtension`
+
+Install NodeJS >= 12.16.1 , if needed, from [here](https://nodejs.org/en/download/releases/).
 
 You can start the development application locally:
 
@@ -88,7 +90,7 @@ This project basically uses this utility function, and is configured to:
 
 ### Limitations
 
-You can add to your extension only `css` and `js` files (other than translations and index.json). Future improvements could allow to add other assets types(icons, images, fonts, json ...)
+You can add to your extension only `css`, `js` and `png`, `jpg`, `gif` image files (other than translations folder and `index.json`). Future improvements could allow to add other assets types(icons, fonts, json ...)
 
 Components retrieved from MapStore will be a copy of the existing ones
 
