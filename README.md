@@ -100,6 +100,7 @@ Here a list of hints to develop your extension:
 
 - In order to keep your changes as much self contained as possible we suggest to put all your code (and assets) in `js/extension/`. (Put css in `js/extension/assets/`, etc...)
 - Use the `@mapstore` alias to refer to MapStore components. This helps your code to be compatible with future enhancements when mapstore will be published as a separated package, that can be shared
+- In order to debug the extension in `ext:start` + `ext:startapp` mode, you need to add `devtool: 'eval'` to `build/webpack.config.js`. 
 
 
 
