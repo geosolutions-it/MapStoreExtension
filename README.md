@@ -90,9 +90,9 @@ This project basically uses this utility function, and is configured to:
 
 ### Limitations
 
-You can add to your extension only `css`, `js` and `png`, `jpg`, `gif` image files (other than translations folder and `index.json`). Future improvements could allow to add other assets types(icons, fonts, json ...)
+For now, components retrieved from MapStore (using the import) will be a **copy of the existing ones**, so calling methods directly on some files imported from MapStore will not have any effect (e.g. register MapInfo Viewers, trying to load resolutions or from ConfigUtils). 
 
-Components retrieved from MapStore will be a copy of the existing ones
+You can add to your extension **only** `css`, `js` and `png`, `jpg`, `gif` image files (other than translations folder and `index.json`). Future improvements could allow to add other assets types(icons, fonts, json ...)
 
 ## Dev Hints
 
