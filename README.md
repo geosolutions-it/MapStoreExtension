@@ -90,7 +90,7 @@ This project basically uses this utility function, and is configured to:
 
 ### Limitations
 
-For now, components retrieved from MapStore (using the import) will be a **copy of the existing ones**, so calling methods directly on some files imported from MapStore will not have any effect (e.g. register MapInfo Viewers, trying to load resolutions or from ConfigUtils). 
+For now, components retrieved from MapStore (using the import) will be a **copy of the existing ones**, so calling methods directly on some files imported from MapStore will not have any effect (e.g. register MapInfo Viewers, trying to load resolutions or from ConfigUtils).
 
 You can add to your extension **only** `css`, `js` and `png`, `jpg`, `gif` image files (other than translations folder and `index.json`). Future improvements could allow to add other assets types(icons, fonts, json ...)
 
@@ -100,7 +100,8 @@ Here a list of hints to develop your extension:
 
 - In order to keep your changes as much self contained as possible we suggest to put all your code (and assets) in `js/extension/`. (Put css in `js/extension/assets/`, etc...)
 - Use the `@mapstore` alias to refer to MapStore components. This helps your code to be compatible with future enhancements when mapstore will be published as a separated package, that can be shared
-- In order to debug the extension in `ext:start` + `ext:startapp` mode, you need to add `devtool: 'eval'` to `build/webpack.config.js`. 
+- In order to debug the extension in `ext:start` + `ext:startapp` mode, you need to add `devtool: 'eval'` to `build/webpack.config.js`.
+- Most of the times you will develop extensions for the main map. For this reason you can find in `app.json` some code comments dedicated to configuring this project to have a plain map on startup. It has not been configured as default because this project is intended to have less differences as possible from a standard project.
 
 
 
