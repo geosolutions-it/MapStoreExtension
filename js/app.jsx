@@ -29,15 +29,16 @@ ConfigUtils.setLocalConfigurationFile('localConfig.json');
  *
  * const appConfig = require('./appConfig');
  *
- * Or override the application configuration file with (e.g. only one page with a mapviewer):
+ * Or override the application configuration file with (e.g. only one page with a mapviewer) - in this case the map loaded will be `config.json` in the root of the app:
  *
- * const appConfig = assign({}, require('@mapstore/product/appConfig'), {
+ * const appConfig = {
+ *     ...require('@mapstore/product/appConfig').default,
  *     pages: [{
  *         name: "mapviewer",
  *         path: "/",
- *         component: require('@mapstore/product/pages/MapViewer')
+ *         component: require('@mapstore/product/pages/MapViewer').default
  *     }]
- * });
+ * };
  */
 const appConfig = require('@mapstore/product/appConfig').default;
 
