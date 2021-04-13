@@ -43,7 +43,7 @@ You should not move or change the `js/extension/plugins/Extension.jsx` file, but
 Moreover you can edit:
 
 - `assets/index.json`: to customize extension dependencies.
-- `assets/translations/: to set up your translations.
+- `assets/translations/`: to set up your translations.
 
 ### Build Extension
 
