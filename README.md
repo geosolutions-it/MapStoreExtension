@@ -1,7 +1,9 @@
 # Template project to create MapStore extensions
 
 This repository is a template where to start to create [MapStore Extensions](https://mapstore.readthedocs.io/en/latest/developer-guide/extensions/).
-It is basically a MapStore project you can run to test your extension and it contains an initial extension you can customize to create your own.
+
+It is basically a customized MapStore project that allows to run, test and build a sample extension.
+You can copy this repository and modify the sample extension to developing your own one.
 
 ## Quick Start
 
