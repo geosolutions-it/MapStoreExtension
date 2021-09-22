@@ -37,7 +37,9 @@ The first step to create the plugin is to name it. To do it, you have to edit 3 
 - Edit `assets/index.json` and change the "name" entry with the name of your plugin. (here you can customize dependencies, if needed)
 - Edit `localConfig.json` replacing "SampleExtension", in `plugins/desktop` section, with the name of your Extension (for running local development)
 
-Edit the package.json's name is not needed anymore because the build process uses the name of the extension instead. Anyway it is recommended to use a unique `name` in your `package.json` for each new extension.
+- *[only for version <= 2020.01.xx]* Edit the `package.json` `name` is not needed anymore because the build process uses the name of the extension instead. 
+
+> **note** Edit the `name` in `package.json` is not needed strictly needed from version 2021.02.xx. Anyway it is a good practice to choose a unique `name` in your `package.json` for a new npm project, in general.
 
 ### Start developing
 
