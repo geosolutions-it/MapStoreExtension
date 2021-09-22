@@ -36,6 +36,7 @@ The first step to create the plugin is to name it. To do it, you have to edit 3 
 - Edit `config.js` to change the name of your extension.
 - Edit `assets/index.json` and change the "name" entry with the name of your plugin. (here you can customize dependencies, if needed)
 - Edit `localConfig.json` replacing "SampleExtension", in `plugins/desktop` section, with the name of your Extension (for running local development)
+- Edit `package.json` and change `name` with a unique name, or follow the alternative solution as for #12
 
 ### Start developing
 
