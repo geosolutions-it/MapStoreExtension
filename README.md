@@ -36,7 +36,6 @@ The first step to create the plugin is to name it. To do it, you have to edit 3 
 - Edit `config.js` to change the name of your extension.
 - Edit `assets/index.json` and change the "name" entry with the name of your plugin. (here you can customize dependencies, if needed)
 - Edit `localConfig.json` replacing "SampleExtension", in `plugins/desktop` section, with the name of your Extension (for running local development)
-
 - *[only for version <= 2020.01.xx]* Edit  `package.json` changing `name` entry with a unique name for your extension. E.g. `mapstore-extension-<ext-name>.`
 
 > **note** Edit the `name` in `package.json` is not needed strictly needed from version 2021.02.xx. Anyway it is a good practice to choose a unique `name` in your `package.json` for a new npm project, in general.
