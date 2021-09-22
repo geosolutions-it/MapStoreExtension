@@ -16,7 +16,8 @@ const ConfigUtils = require('@mapstore/utils/ConfigUtils').default;
  */
 ConfigUtils.setConfigProp('translationsPath', './MapStore2/web/client/translations');
 ConfigUtils.setConfigProp('themePrefix', 'MapStoreExtension');
-
+ConfigUtils.setConfigProp('extensionsRegistry', 'extensions.json');
+ConfigUtils.setConfigProp('extensionsFolder', '');
 /**
  * Use a custom plugins configuration file with:
  *
