@@ -3,6 +3,7 @@ const path = require("path");
 
 const createExtensionWebpackConfig = require('../../MapStore2/build/createExtensionWebpackConfig');
 const CopyPlugin = require('copy-webpack-plugin');
+const ProvidePlugin = require("webpack/lib/ProvidePlugin");
 const ZipPlugin = require('zip-webpack-plugin');
 const {name} = require('../../config');
 const commons = require('./commons');
@@ -13,6 +14,9 @@ const plugins = [
         { from: path.resolve(__dirname, "..", "..", "assets", "translations"), to: "translations" },
         { from: path.resolve(__dirname, "..", "..", "assets", "index.json"), to: "index.json" }
     ]),
+    new ProvidePlugin({
+        Buffer: ['buffer', 'Buffer']
+    }),
     new ZipPlugin({
         filename: `${name}.zip`,
         pathMapper: assetPath => {
