@@ -13,6 +13,10 @@ const ConfigUtils = require('@mapstore/utils/ConfigUtils').default;
  * Add custom (overriding) translations with:
  *
  * ConfigUtils.setConfigProp('translationsPath', ['./MapStore2/web/client/translations', './translations']);
+ *
+ * Add this line to use /config.json root file :
+ *
+ * ConfigUtils.setConfigProp("configurationFolder", "");
  */
 ConfigUtils.setConfigProp('translationsPath', './MapStore2/web/client/translations');
 ConfigUtils.setConfigProp('themePrefix', 'MapStoreExtension');
