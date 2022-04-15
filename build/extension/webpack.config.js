@@ -10,9 +10,9 @@ const webpackConfig = createExtensionWebpackConfig({
     overrides: {
         // serve translations (and index.json)
         devServer: {
-            publicPath: "/extension/",
+            publicPath: "/extensions/",
             contentBase: './assets',
-            contentBasePublicPath: '/extension/'
+            contentBasePublicPath: '/extensions/'
         }
     }
 });
