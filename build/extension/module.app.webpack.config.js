@@ -9,6 +9,9 @@ webpackConfig.devServer.proxy["/extensions/"] = {
     target: "http://localhost:8082"
 };
 // emulate the extensions.json
+
+// before option has changed in the v4 of webpack-dev-server,
+// see https://github.com/webpack/webpack-dev-server/blob/master/migration-v4.md
 webpackConfig.devServer.before = function(app) {
     app.get("/extensions/extensions.json", function(req, res) {
         res.json({
@@ -18,5 +21,5 @@ webpackConfig.devServer.before = function(app) {
             }
         });
     });
-},
+};
 module.exports = webpackConfig;
