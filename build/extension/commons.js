@@ -10,6 +10,7 @@ module.exports = {
     destination: path.join(__dirname, '..', '..', "dist"),
     // to compile properly also mapstore dependencies
     alias: {
+        "@mapstore/patcher": path.resolve(__dirname, '..', '..', "node_modules", "@mapstore", "patcher"),
         "@mapstore": path.resolve(__dirname, '..', '..', "MapStore2", "web", "client"),
         "@js": path.resolve(__dirname, '..', '..', "js")
     }
