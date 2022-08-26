@@ -5,10 +5,10 @@ This repository is a template where to start to create [MapStore Extensions](htt
 It is basically a customized MapStore project that allows to run, test and build a sample extension.
 You can copy this repository and modify the sample extension to develop your own one.
 
-From 22-08-2022 we started following the release branching procedure we have on main MapStore project. This means two things:
+From 26-08-2022 we started following the release branching procedure we have on main MapStore project. This means two things:
 
 - **master** branch here will follow and submodule revision will be aligned to master branch [here](https://github.com/geosolutions-it/MapStore2)
-- **stable branch** will do the same, will follow and submodule revision will be aligned to latest stable branch available, which currently is [2022.02.xx](https://github.com/geosolutions-it/MapStore2/tree/2022.02.xx)
+- **stable branch** will do the same, will follow and submodule revision will be aligned to latest stable branch available
 
 ## Quick Start
 
