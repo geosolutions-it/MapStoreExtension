@@ -5,6 +5,11 @@ This repository is a template where to start to create [MapStore Extensions](htt
 It is basically a customized MapStore project that allows to run, test and build a sample extension.
 You can copy this repository and modify the sample extension to develop your own one.
 
+From 22-08-2022 we started following the release branching procedure we have on main MapStore project. This means two things:
+
+- **master** branch here will follow and submodule revision will be aligned to master branch [here](https://github.com/geosolutions-it/MapStore2)
+- **stable branch** will do the same, will follow and submodule revision will be aligned to latest stable branch available, which currently is [2022.02.xx](https://github.com/geosolutions-it/MapStore2/tree/2022.02.xx)
+
 ## Quick Start
 
 Clone the repository with the --recursive option to automatically clone submodules.
@@ -20,7 +25,6 @@ You can start the development application locally:
 `npm start`
 
 The application runs at `http://localhost:8081` afterwards. You will see, opening a map, the sample plugin on top of the map.
-
 
 ## Start creating your own extension
 
@@ -57,7 +61,6 @@ To build the extension you should run
 - `npm run ext:build`
 
 This will create a zip with the name of your extension in `dist` directory.
-
 
 ### Test Module
 
@@ -108,5 +111,3 @@ Here a list of hints to develop your extension:
 - In order to debug the extension in `ext:start` + `ext:startapp` mode, you need to add `devtool: 'eval'` to `build/webpack.config.js`.
 - Most of the times you will develop extensions for the main map. For this reason you can find in `app.json` some code comments dedicated to configuring this project to have a plain map on startup. It has not been configured as default because this project is intended to have less differences as possible from a standard project.
 - When the `extensions.json` is configured in `app.jsx` via `extensionsRegistry` and `extensionsFolder`, in order to emulate the `extensions.json` from Webpack DevServer for testing, the paths configured in `build/module.app.webpack.config.js` and `build/webpack.config.js` needs to be modified accordingly
-
-
