@@ -11,9 +11,6 @@
             "babelOptions": {
                 "configFile": "./MapStore2/build/babel.config.js"
             }
-        },
-        "globals": {
-            "__MAPSTORE_PROJECT_CONFIG__": false
         }
     },
     "eslintIgnore": [
