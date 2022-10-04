@@ -106,7 +106,8 @@ jobs:
         run: npm install
 
       - name: compile
-      - run: npm run ext:build
+        run: npm run ext:build
+      
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v2
         with:
