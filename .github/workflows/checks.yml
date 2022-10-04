@@ -1,0 +1,54 @@
+# This workflow will run tests for npm and java
+
+name: checks
+
+on:
+  push:
+    branches:
+    - master
+    # using filter pattern: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+    - '[cC][0-9][0-9][0-9]-+**' # c123 or c123-something for custom branch
+    - '[0-9][0-9][0-9][0-9].[0-9][0-9].xx' # stable brances. E.g. 2021.01.xx
+  pull_request:
+    branches:
+    - master
+    # using filter pattern: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+    - '[cC][0-9][0-9][0-9]-+**' # c123 or c123-something for custom branch
+    - '[0-9][0-9][0-9][0-9].[0-9][0-9].xx' # stable brances. E.g. 2021.01.xx
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "checking out"
+        uses: actions/checkout@v2
+      - name: "Checkout submodules"
+        run: git submodule update --init --recursive    
+
+      - name: "setting up npm"
+        uses: actions/setup-node@v2
+        with:
+            node-version: '12.x'
+
+      ###############
+      # NPM CHECKS
+      #############
+      - name: npm install
+        run: npm install
+
+      - name: ESlint
+        run: npm run lint
+
+      - name: Unit Tests
+        run: npm test -- --reporters mocha,coverage,coveralls
+
+      - name: build
+        run: npm run ext:build
+      
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: Artifacts
+          path: dist/SampleExtension.zip
+          retention-days: 5
+
