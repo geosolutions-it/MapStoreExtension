@@ -22,8 +22,8 @@ jobs:
     steps:
       - name: "checking out"
         uses: actions/checkout@v2
-        with:
-          submodules: recursive
+      - name: "Checkout submodules"
+        run: git submodule update --init --recursive    
 
       - name: "setting up npm"
         uses: actions/setup-node@v2
