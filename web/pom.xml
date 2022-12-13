@@ -2,101 +2,47 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>it.geosolutions.MapStoreExtension</groupId>
-    <artifactId>MapStoreExtension-root</artifactId>
+    <groupId>it.geosolutions.mapstore</groupId>
+    <artifactId>mapstore-root</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>MapStoreExtension-web</artifactId>
+  <artifactId>mapstore-web</artifactId>
   <packaging>war</packaging>
   <name>Template project to create MapStore extensions - WAR</name>
-  <url>undefined</url>
+  <url></url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <tomcat.version>7.0.86</tomcat.version>
+    <tomcat.version>8.5.69</tomcat.version>
+    <tomcat.port>8080</tomcat.port>
   </properties>
 
   <dependencies>
     <!-- MapStore backend -->
     <dependency>
-      <groupId>it.geosolutions.mapstore</groupId>
-      <artifactId>mapstore-backend</artifactId>
-      <version>1.0-SNAPSHOT</version>
+        <groupId>it.geosolutions.mapstore</groupId>
+        <artifactId>mapstore-services</artifactId>
+        <version>1.4-SNAPSHOT</version>
     </dependency>
+
     <!-- ================================================================ -->
     <!-- GeoStore modules -->
     <!-- ================================================================ -->
     <dependency>
       <groupId>it.geosolutions.geostore</groupId>
       <artifactId>geostore-webapp</artifactId>
-      <version>1.5-SNAPSHOT</version>
+      <version>1.9.0</version>
       <type>war</type>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>proxy</groupId>
       <artifactId>http_proxy</artifactId>
-      <version>1.2-SNAPSHOT</version>
+      <version>1.3.0</version>
       <type>war</type>
       <scope>runtime</scope>
     </dependency>
 
-
-    <dependency>
-      <groupId>org.geotools</groupId>
-      <artifactId>gt-epsg-hsql</artifactId>
-      <version>8.6</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jyaml</groupId>
-      <artifactId>jyaml</artifactId>
-      <version>1.3</version>
-    </dependency>
-    <dependency>
-      <groupId>com.vividsolutions</groupId>
-      <artifactId>jts</artifactId>
-      <version>1.8</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.media</groupId>
-      <artifactId>jai_codec</artifactId>
-      <version>1.1.3</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.pdfbox</groupId>
-      <artifactId>pdfbox</artifactId>
-      <version>1.6.0</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.media</groupId>
-      <artifactId>jai_imageio</artifactId>
-      <version>1.1</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-httpclient</groupId>
-      <artifactId>commons-httpclient</artifactId>
-      <version>3.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.xmlgraphics</groupId>
-      <artifactId>batik-transcoder</artifactId>
-      <version>1.7</version>
-    </dependency>
-    <dependency>
-      <groupId>com.lowagie</groupId>
-      <artifactId>itext</artifactId>
-      <version>2.1.5</version>
-    </dependency>
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20080701</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.media</groupId>
-      <artifactId>jai_core</artifactId>
-      <version>1.1.3</version>
-    </dependency>
     <!-- JUnit -->
     <dependency>
       <groupId>junit</groupId>
@@ -113,9 +59,9 @@
     </dependency>
     <!-- servlet -->
     <dependency>
-          <groupId>javax.servlet</groupId>
-          <artifactId>servlet-api</artifactId>
-          <version>2.5</version>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>3.0.1</version>
     </dependency>
     <!-- gzip compression filter -->
     <dependency>
@@ -123,10 +69,16 @@
         <artifactId>ehcache-web</artifactId>
         <version>2.0.4</version>
     </dependency>
+    <!-- misc -->
+    <dependency>
+        <groupId>commons-pool</groupId>
+        <artifactId>commons-pool</artifactId>
+        <version>1.5.4</version>
+    </dependency>
   </dependencies>
 
   <build>
-    <finalName>MapStoreExtension</finalName>
+    <finalName>mapstore</finalName>
     <plugins>
         <plugin>
             <artifactId>maven-resources-plugin</artifactId>
@@ -139,7 +91,7 @@
                         <goal>copy-resources</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension</outputDirectory>
+                        <outputDirectory>${basedir}/target/mapstore</outputDirectory>
                         <encoding>UTF-8</encoding>
                         <resources>
                             <resource>
@@ -159,7 +111,7 @@
                         <goal>copy-resources</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension</outputDirectory>
+                        <outputDirectory>${basedir}/target/mapstore</outputDirectory>
                         <encoding>UTF-8</encoding>
                         <resources>
                             <resource>
@@ -182,7 +134,7 @@
                         <goal>copy-resources</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension</outputDirectory>
+                        <outputDirectory>${basedir}/target/mapstore</outputDirectory>
                         <encoding>UTF-8</encoding>
                         <resources>
                             <resource>
@@ -199,13 +151,59 @@
                     </configuration>
                 </execution>
                 <execution>
+                    <id>only dashboard-embedded.html</id>
+                    <phase>process-classes</phase>
+                    <goals>
+                        <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${basedir}/target/__PROJECTNAME__</outputDirectory>
+                        <encoding>UTF-8</encoding>
+                        <resources>
+                            <resource>
+                                <directory>${basedir}/../dist</directory>
+                                <includes>
+                                    <include>dashboard-embedded.html</include>
+                                </includes>
+                                <excludes>
+                                    <exclude>MapStore2/*</exclude>
+                                    <exclude>MapStore2/**/*</exclude>
+                                </excludes>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>only geostory-embedded.html</id>
+                    <phase>process-classes</phase>
+                    <goals>
+                        <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${basedir}/target/__PROJECTNAME__</outputDirectory>
+                        <encoding>UTF-8</encoding>
+                        <resources>
+                            <resource>
+                                <directory>${basedir}/../dist</directory>
+                                <includes>
+                                    <include>geostory-embedded.html</include>
+                                </includes>
+                                <excludes>
+                                    <exclude>MapStore2/*</exclude>
+                                    <exclude>MapStore2/**/*</exclude>
+                                </excludes>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </execution>
+                <execution>
                     <id>only api.html</id>
                     <phase>process-classes</phase>
                     <goals>
                         <goal>copy-resources</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension</outputDirectory>
+                        <outputDirectory>${basedir}/target/mapstore</outputDirectory>
                         <encoding>UTF-8</encoding>
                         <resources>
                             <resource>
@@ -228,7 +226,7 @@
                         <goal>copy-resources</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension</outputDirectory>
+                        <outputDirectory>${basedir}/target/mapstore</outputDirectory>
                         <encoding>UTF-8</encoding>
                         <resources>
                             <resource>
@@ -258,7 +256,7 @@
                         <goal>copy-resources</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension/dist</outputDirectory>
+                        <outputDirectory>${basedir}/target/mapstore/dist</outputDirectory>
                         <encoding>UTF-8</encoding>
                         <resources>
                             <resource>
@@ -274,7 +272,7 @@
                         <goal>copy-resources</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension/assets</outputDirectory>
+                        <outputDirectory>${basedir}/target/mapstore/assets</outputDirectory>
                         <encoding>UTF-8</encoding>
                         <resources>
                             <resource>
@@ -290,32 +288,13 @@
                         <goal>copy-resources</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension/</outputDirectory>
+                        <outputDirectory>${basedir}/target/mapstore/</outputDirectory>
                         <encoding>UTF-8</encoding>
                         <resources>
                             <resource>
                                 <directory>${basedir}/../</directory>
                                 <includes>
                                     <include>translations/*</include>
-                                </includes>
-                            </resource>
-                        </resources>
-                    </configuration>
-                </execution>
-				<execution>
-                    <id>printing</id>
-                    <phase>process-classes</phase>
-                    <goals>
-                        <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension/printing</outputDirectory>
-                        <encoding>UTF-8</encoding>
-                        <resources>
-                            <resource>
-                                <directory>${basedir}/../MapStore2/resources/geoserver/print</directory>
-                                <includes>
-                                    <include>*</include>
                                 </includes>
                             </resource>
                         </resources>
@@ -328,7 +307,7 @@
                         <goal>copy-resources</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension/MapStore2/web/client</outputDirectory>
+                        <outputDirectory>${basedir}/target/mapstore/MapStore2/web/client</outputDirectory>
                         <encoding>UTF-8</encoding>
                         <resources>
                             <resource>
@@ -341,29 +320,13 @@
                     </configuration>
                 </execution>
                 <execution>
-                    <id>CesiumJS-navigation</id>
-                    <phase>process-classes</phase>
-                    <goals>
-                        <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension/MapStore2/web/client/libs/cesium-navigation</outputDirectory>
-                        <encoding>UTF-8</encoding>
-                        <resources>
-                            <resource>
-                                <directory>${basedir}/../MapStore2/web/client/libs/cesium-navigation</directory>
-                            </resource>
-                        </resources>
-                    </configuration>
-                </execution>
-                <execution>
                     <id>config files</id>
                     <phase>process-classes</phase>
                     <goals>
                         <goal>copy-resources</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/target/MapStoreExtension/MapStore2/web/client</outputDirectory>
+                        <outputDirectory>${basedir}/target/mapstore/MapStore2/web/client</outputDirectory>
                         <encoding>UTF-8</encoding>
                         <resources>
                             <resource>
@@ -386,8 +349,10 @@
                 <packagingExcludes>WEB-INF/lib/commons-codec-1.2.jar,
                 WEB-INF/lib/commons-io-1.1.jar,
                 WEB-INF/lib/commons-logging-1.0.4.jar,
-		WEB-INF/lib/commons-pool-1.3.jar,
-		WEB-INF/lib/spring-*-3.1.0*.jar
+                WEB-INF/lib/commons-pool-1.3.jar,
+                WEB-INF/lib/slf4j-api-1.5*.jar,
+                WEB-INF/lib/slf4j-log4j12-1.5*.jar,
+                WEB-INF/lib/spring-tx-5.2.15*.jar
                 </packagingExcludes>
                 <overlays>
                     <overlay>
@@ -402,150 +367,99 @@
             </configuration>
         </plugin>
 
-        <!-- Run the application using "mvn tomcat7:run-war" -->
         <plugin>
-            <groupId>org.apache.tomcat.maven</groupId>
-            <artifactId>tomcat7-maven-plugin</artifactId>
-            <version>2.2</version>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven3-plugin</artifactId>
             <configuration>
-                <path>/MapStoreExtension</path>
-                <port>8080</port>
+                <container>
+                    <containerId>tomcat8x</containerId>
+                    <zipUrlInstaller>
+                        <url>https://repo.maven.apache.org/maven2/org/apache/tomcat/tomcat/8.5.69/tomcat-8.5.69.zip</url>
+                    </zipUrlInstaller>
+                </container>
+                <configuration>
+                    <type>standalone</type>
+                    <home>
+                        ${project.build.directory}/apache-tomcat-${tomcat.version}
+                    </home>
+                    <properties>
+                        <cargo.servlet.port>${tomcat.port}</cargo.servlet.port>
+                        <cargo.logging>low</cargo.logging>
+                    </properties>
+                </configuration>
+                <deployables>
+                    <deployable>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>${project.artifactId}</artifactId>
+                        <type>war</type>
+                        <properties>
+                            <context>/mapstore</context>
+                        </properties>
+                    </deployable>
+                </deployables>
             </configuration>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                    <artifactId>tomcat-embed-core</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-util</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-coyote</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-api</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jdbc</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-dbcp</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-servlet-api</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jsp-api</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jasper</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-jasper-el</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-el-api</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-catalina</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-tribes</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-catalina-ha</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-annotations-api</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat</groupId>
-                    <artifactId>tomcat-juli</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                    <artifactId>tomcat-embed-logging-juli</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                    <artifactId>tomcat-embed-logging-log4j</artifactId>
-                    <version>${tomcat.version}</version>
-                </dependency>
-            </dependencies>
         </plugin>
     </plugins>
   </build>
     <profiles>
         <profile>
+            <id>dev-custom-port</id>
+            <activation>
+                <property>
+                    <name>env.MAPSTORE_BACKEND_PORT</name>
+                </property>
+            </activation>
+            <properties>
+                <!-- Override only if necessary -->
+                <tomcat.port>${env.MAPSTORE_BACKEND_PORT}</tomcat.port>
+            </properties>
+        </profile>
+        <profile>
             <id>printing</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.coderplus.maven.plugins</groupId>
-                        <artifactId>copy-rename-maven-plugin</artifactId>
-                        <version>1.0</version>
-                        <executions>
-                            <execution>
-                                <id>rename-context</id>
-                                <phase>prepare-package</phase>
-                                <goals>
-                                <goal>copy</goal>
-                                </goals>
-                                <configuration>
-                                <overWrite>true</overWrite>
-                                <sourceFile>src/printing/applicationContext-print.xml</sourceFile>
-                                <destinationFile>target/MapStoreExtension/WEB-INF/classes/applicationContext-print.xml</destinationFile>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.httpcomponents</groupId>
+                        <artifactId>httpclient</artifactId>
+                        <version>4.5.13</version>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
             <dependencies>
                 <!-- mapfish-print -->
                 <dependency>
                     <groupId>org.mapfish.print</groupId>
                     <artifactId>print-lib</artifactId>
-                    <version>geosolutions-2.0-SNAPSHOT</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.mapfish.geo</groupId>
-                    <artifactId>mapfish-geo-lib</artifactId>
-                    <version>1.2.0</version>
+                    <version>geosolutions-2.1.0</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>commons-codec</groupId>
+                            <artifactId>commons-codec</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>com.fasterxml.jackson.core</groupId>
+                            <artifactId>jackson-annotations</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>com.fasterxml.jackson.core</groupId>
+                            <artifactId>jackson-core</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>com.fasterxml.jackson.core</groupId>
+                            <artifactId>jackson-databind</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.springframework</groupId>
+                            <artifactId>spring-web</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.springframework</groupId>
+                            <artifactId>spring-context</artifactId>
+                        </exclusion>
+                    </exclusions>
                 </dependency>
             </dependencies>
             </profile>
@@ -562,32 +476,11 @@
             </snapshots>
         </repository>
 
-        <!-- Apache -->
-        <repository>
-            <id>maven2-repository.dev.java.net</id>
-            <name>Java.net Repository for Maven</name>
-            <url>http://download.java.net/maven/2/</url>
-            <layout>default</layout>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-
-        <!-- JBoss -->
-        <repository>
-            <id>jboss-repo</id>
-            <name>JBoss Maven2 Repository</name>
-            <url>http://repository.jboss.com/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-
         <!-- Spring -->
         <repository>
             <id>spring-release</id>
             <name>Spring Portfolio Release Repository</name>
-            <url>http://maven.springframework.org/release</url>
+            <url>https://maven.springframework.org/release</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -595,7 +488,7 @@
         <repository>
             <id>spring-external</id>
             <name>Spring Portfolio External Repository</name>
-            <url>http://maven.springframework.org/external</url>
+            <url>https://maven.springframework.org/external</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
