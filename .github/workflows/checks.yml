@@ -23,7 +23,7 @@ jobs:
       - name: "checking out"
         uses: actions/checkout@v2
       - name: "Checkout submodules"
-        run: git submodule update --init --recursive    
+        run: git submodule update --init --recursive
 
       - name: "setting up npm"
         uses: actions/setup-node@v2
@@ -44,7 +44,10 @@ jobs:
 
       - name: build
         run: npm run ext:build
-      
+
+      - name: build-backend
+        run: npm run be:build
+
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v2
         with:
