@@ -102,6 +102,13 @@ For now, components retrieved from MapStore (using the import) will be a **copy 
 
 You can add to your extension **only** `css`, `js` and `png`, `jpg`, `gif` image files (other than translations folder and `index.json`). Future improvements could allow to add other assets types(icons, fonts, json ...)
 
+### Compatibility
+
+MapStore and MapStoreExtension are usually released in couples. So, generally speaking, MapStoreExtension `2022.02.00` will be compatible with `2022.02.00` ,`2022.02.01` with `2022.02.01` and so on. 
+Anyway, depending on the effective usage of the shared libraries and their updates, an extension can continue to be compatible across many different versions. 
+
+*note:* Sometimes it can happen that we need to release some patch release for one or both the projects. In this case look at the release details to understand if there are know compatibility issues. 
+
 ## Dev Hints
 
 Here a list of hints to develop your extension:
