@@ -107,7 +107,7 @@ You can add to your extension **only** `css`, `js` and `png`, `jpg`, `gif` image
 MapStore and MapStoreExtension are usually released in couples. So, generally speaking, MapStoreExtension `2022.02.00` will be compatible with `2022.02.00` ,`2022.02.01` with `2022.02.01` and so on. 
 Anyway, depending on the effective usage of the shared libraries and their updates, an extension can continue to be compatible across many different versions. 
 
-*note:* Sometimes it can happen that we need to release some patch release for one or both the projects. In this case look at the release details to understand if there are know compatibility issues. 
+*note: Sometimes it can happen that we need to release some patch release for one or both the projects. In this case look at the release notes to check if there are know compatibility issues.*
 
 ## Dev Hints
 
