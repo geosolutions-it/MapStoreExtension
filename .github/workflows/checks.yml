@@ -44,6 +44,9 @@ jobs:
 
       - name: build
         run: npm run ext:build
+      # Test back-end correct build
+      - name: build-backend
+        run: npm run be:build
       
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v2
