@@ -1,0 +1,47 @@
+name: Update MapStore Submodule
+
+on:
+  push:
+    branches:
+      - master
+      - '2023.01.xx'
+
+jobs:
+  update_submodule:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Git
+      run: sudo apt-get update && sudo apt-get -y install git
+
+    - name: Clone MapStoreExtension
+      run: git clone https://github.com/geosolutions-it/MapStoreExtension.git
+      working-directory: ./
+
+    - name: Checkout corresponding branch in MapStoreExtension
+      run: git checkout ${{ github.ref }}
+      working-directory: ./MapStoreExtension
+
+    - name: Get latest commit hash of MapStore branch
+      run: |
+        git fetch origin master
+        echo "::set-output name=commit_hash::$(git rev-parse origin/${{ github.ref }})"
+      id: get_commit_hash
+
+    - name: Update git submodule
+      run: |
+        git config user.name 'GitHub Actions'
+        git config user.email '<>'
+
+        git submodule update --remote --merge --init --checkout
+        git add MapStore
+        git commit -m "Update MapStore submodule to ${{ steps.get_commit_hash.outputs.commit_hash }}"
+      working-directory: ./MapStoreExtension
+
+    - name: Push changes to MapStoreExtension
+      uses: ad-m/github-push-action@master
+      with:
+        github-token: ${{ secrets.ADD_TO_PROJECT }}
+        branch: ${{ github.ref }}
