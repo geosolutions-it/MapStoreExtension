@@ -1,0 +1,38 @@
+name: Cut Release Branch
+on:
+  workflow_dispatch:
+    inputs:
+      release-branch:
+        description: MapStore branch name to use (YYYY.MM.xx). E.g. 2024.01.xx
+        required: true
+      main-branch:
+        description: main branch
+        default: master
+jobs:
+  cut-release:
+    name: Create release branch and PRs into main main branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.main-branch }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create release branch and generate PR body
+        id: create-branch
+        env:
+          RELEASE_BRANCH:  ${{ github.event.inputs.release-branch }}
+
+        run: |
+          # script will go here
+          echo "Initializing git"
+          # Optional
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          BRANCH_NAME="${RELEASE_BRANCH}"
+          echo "creating branch is $BRANCH_NAME"
+          git checkout -b "$BRANCH_NAME"
+          git submodule set-branch --branch $BRANCH_NAME MapStore2
+          git add .gitmodules
+          git commit -m "Set branch for submodule MapStore2 to $BRANCH_NAME"
+          git push --set-upstream origin "$BRANCH_NAME"
