@@ -33,7 +33,6 @@ jobs:
   checks:
     needs: update
     uses: ./.github/workflows/checks.yml
-          git push
   push:
     runs-on: ubuntu-latest
     steps:
