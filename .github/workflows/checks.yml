@@ -3,12 +3,14 @@
 name: checks
 
 on:
+  workflow_call:
   push:
     branches:
     - master
     # using filter pattern: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
     - '[cC][0-9][0-9][0-9]-+**' # c123 or c123-something for custom branch
     - '[0-9][0-9][0-9][0-9].[0-9][0-9].xx' # stable brances. E.g. 2021.01.xx
+    - 'push-action/**'
   pull_request:
     branches:
     - master

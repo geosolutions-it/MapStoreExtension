@@ -1,9 +1,9 @@
 
 name: Update Submodules
 on:
-  schedule:
+  # schedule:
   # run daily at midnight
-  - cron: '0 0 * * *'
+  # - cron: '0 0 * * *'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -30,4 +30,8 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions - update submodules"
           git commit -am "Update submodules" || echo "No changes to commit"
-          git push
+      - name: Push to protected branch
+        uses: CasperWA/push-protected@v2
+        with:
+          token: ${{ secrets.PUSH_PROTECTED_BRANCH_TOKEN }} # This requires a special token to be able to trigger checks on new branch creation
+          ref: ${{ github.ref }}
