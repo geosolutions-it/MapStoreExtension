@@ -3,6 +3,7 @@
 name: checks
 
 on:
+  workflow_call:
   push:
     branches:
     - master
