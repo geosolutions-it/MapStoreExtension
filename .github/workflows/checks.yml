@@ -25,12 +25,12 @@ jobs:
       - name: "checking out"
         uses: actions/checkout@v2
       - name: "Checkout submodules"
-        run: git submodule update --init --recursive    
+        run: git submodule update --init --recursive
 
       - name: "setting up npm"
         uses: actions/setup-node@v2
         with:
-            node-version: '12.x'
+            node-version: '20.x'
 
       ###############
       # NPM CHECKS
@@ -49,7 +49,7 @@ jobs:
       # Test back-end correct build
       - name: build-backend
         run: npm run be:build
-      
+
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
