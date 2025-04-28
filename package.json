@@ -118,7 +118,7 @@
     "mapstore2": "file:MapStore2"
 },
 "scripts": {
-    "postinstall": "node MapStore2/utility/build/postInstall.js",
+    "postinstall": "node MapStore2/utility/build/postInstall.js && rm -rf MapStore2/node_modules",
     "clean": "rimraf dist",
     "compile": "npm run clean && mkdirp ./dist && node --max_old_space_size=2048 ./node_modules/webpack/bin/webpack.js --config prod-webpack.config.js --env.production",
     "fe:start": "webpack serve --progress --color --port 8081 --hot --inline --content-base .",
