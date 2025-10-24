@@ -2,6 +2,7 @@
   "plugins": [
     {
       "name": "SampleExtension",
+      "version": "@@VERSION@@",
       "dependencies": [
         "Toolbar"
       ]
