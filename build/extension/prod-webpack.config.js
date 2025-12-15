@@ -9,13 +9,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const {name} = require('../../config');
 const commons = require('./commons');
 
-// read version.txt and produce a temporary updated index.json
-const versionFile = path.resolve(__dirname, "..", "..", "version.txt");
+// read version and produce a temporary updated index.json
+const { version: versionText } = require('../../package.json');
 const indexSrc = path.resolve(__dirname, "..", "..", "assets", "index.json");
 const tmpIndex = path.resolve(__dirname, "..", "..", "assets", "index.json.tmp");
-
 try {
-    const versionText = fs.readFileSync(versionFile, 'utf8').trim().split('-')[1];
     const indexContent = JSON.parse(fs.readFileSync(indexSrc, 'utf8'));
     if (Array.isArray(indexContent.plugins)) {
         indexContent.plugins = indexContent.plugins.map(p => p && p.name === name ? { ...p, version: versionText } : p);
@@ -26,12 +24,11 @@ try {
     console.error('Error updating index.json from version.txt:', e);
 }
 
-
 // the build configuration for production allow to create the final zip file, compressed accordingly
 const plugins = [
     new CopyPlugin([
         { from: path.resolve(__dirname, "..", "..", "assets", "translations"), to: "translations" },
-        { from: tmpIndex, to: 'index.json' },
+        { from: tmpIndex, to: 'index.json' }
     ]),
     new ZipPlugin({
         filename: `${name}.zip`,
