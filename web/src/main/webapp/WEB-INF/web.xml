@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.4"
-	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app id="WebApp_ID" version="6.0"
+	xmlns:javaee="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
 
 	<!-- pick up all spring application contexts -->
 	<context-param>
@@ -22,7 +22,7 @@
       <param-value>/proxy.properties,${datadir.location}/proxy.properties</param-value>
     </context-param>
 
-    <!-- <context-param> <param-name>log4jConfigLocation</param-name> <param-value>file:${config.dir}/log4j.xml</param-value>
+	<!-- <context-param> <param-name>log4jConfigLocation</param-name> <param-value>file:${config.dir}/log4j2.xml</param-value>
 		</context-param> -->
 
 	<!--
@@ -30,10 +30,11 @@
       - The application context is then available via
       - WebApplicationContextUtils.getWebApplicationContext(servletContext).
     -->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 
+    <!-- Allow to use RequestContextHolder -->
     <filter>
         <filter-name>springRequestContextFilter</filter-name>
         <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
@@ -53,25 +54,52 @@
 		<url-pattern>/rest/*</url-pattern>
 	</filter-mapping>
 
-  <!-- GZip compression -->
-	<filter>
-		<filter-name>CompressionFilter</filter-name>
-		<filter-class>net.sf.ehcache.constructs.web.filter.GzipFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>CompressionFilter</filter-name>
-		<url-pattern>*.css</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>CompressionFilter</filter-name>
-		<url-pattern>*.html</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>CompressionFilter</filter-name>
-		<url-pattern>*.js</url-pattern>
-	</filter-mapping>
+    <!-- Cache management -->
+    <filter>
+        <filter-name>noCacheFilter</filter-name>
+        <filter-class>it.geosolutions.mapstore.filters.NoCacheFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>noCacheFilter</filter-name>
+        <url-pattern>/</url-pattern> <!-- index.html -->
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>noCacheFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>noCacheFilter</filter-name>
+        <url-pattern>*.json</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>noCacheFilter</filter-name>
+        <url-pattern>*.txt</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>viewFramingFilter</filter-name>
+        <filter-class>org.apache.catalina.filters.HttpHeaderSecurityFilter</filter-class>
+        <init-param>
+            <param-name>antiClickJackingOption</param-name>
+            <param-value>SAMEORIGIN</param-value>
+        </init-param>
+        <!-- HSTS belongs to the TLS terminator, not to the application -->
+        <init-param>
+            <param-name>hstsEnabled</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>blockContentTypeSniffingEnabled</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>viewFramingFilter</filter-name>
+        <url-pattern>/index.html</url-pattern>
+    </filter-mapping>
 
     <!--  Backend Spring MVC controllers -->
+    <!--  Backward compatibility -->
     <servlet>
         <servlet-name>loadAssets</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -102,8 +130,7 @@
         <url-pattern>/extensions/*</url-pattern>
     </servlet-mapping>
 
-
-    <!-- CXF Servlet -->
+	<!-- CXF Servlet -->
 	<servlet>
 		<servlet-name>CXFServlet</servlet-name>
 		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
@@ -124,6 +151,21 @@
       <servlet-name>HttpProxy</servlet-name>
       <url-pattern>/proxy/*</url-pattern>
     </servlet-mapping>
+
+    <!-- Printing Servlet -->
+    <servlet>
+       <servlet-name>mapfish.print</servlet-name>
+       <servlet-class>org.mapfish.print.servlet.MapPrinterServlet</servlet-class>
+       <init-param>
+         <param-name>config</param-name>
+         <param-value>printing/config.yaml</param-value>
+       </init-param>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>mapfish.print</servlet-name>
+      <url-pattern>/pdf/*</url-pattern>
+    </servlet-mapping>
+
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
