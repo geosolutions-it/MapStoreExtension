@@ -1,9 +1,9 @@
-FROM tomcat:8.5-jdk8-openjdk
+FROM tomcat:10.1-jdk17
 MAINTAINER geosolutions<info@geo-solutions.it>
 
 # Tomcat specific options
 ENV CATALINA_BASE "$CATALINA_HOME"
-ENV JAVA_OPTS="${JAVA_OPTS}  -Xms512m -Xmx512m -XX:MaxPermSize=128m"
+ENV JAVA_OPTS="${JAVA_OPTS}  -Xms512m -Xmx512m"
 
 # Optionally remove Tomcat manager, docs, and examples
 ARG TOMCAT_EXTRAS=false
