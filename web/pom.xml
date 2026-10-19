@@ -6,10 +6,10 @@
     <artifactId>MapStoreExtension-root</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>mapstore-web</artifactId>
+  <artifactId>MapStoreExtension-web</artifactId>
   <packaging>war</packaging>
   <name>Template project to create MapStore extensions - WAR</name>
-  <url></url>
+  <url>https://github.com/geosolutions-it/MapStoreExtension</url>
 
   <dependencies>
     <!-- MapStore services -->
@@ -59,21 +59,9 @@
     </dependency>
     <!-- servlet -->
     <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>${javax.servlet-api.version}</version>
-    </dependency>
-    <!-- gzip compression filter -->
-    <dependency>
-        <groupId>net.sf.ehcache</groupId>
-        <artifactId>ehcache-web</artifactId>
-        <version>${ehcache-web.version}</version>
-    </dependency>
-    <!-- misc -->
-    <dependency>
-        <groupId>commons-pool</groupId>
-        <artifactId>commons-pool</artifactId>
-        <version>${commons-pool.version}</version>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>${jakarta.servlet-api.version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -393,7 +381,7 @@
             <version>${cargo.version}</version>
             <configuration>
                 <container>
-                    <containerId>tomcat9x</containerId>
+                    <containerId>tomcat10x</containerId>
                     <zipUrlInstaller>
                         <url>
                             https://repo.maven.apache.org/maven2/org/apache/tomcat/tomcat/${tomcat.version}/tomcat-${tomcat.version}.zip
@@ -406,9 +394,11 @@
                         ${project.build.directory}/apache-tomcat-${tomcat.version}
                     </home>
                     <properties>
-                         <cargo.jvmargs>
+                        <cargo.jvmargs>
+                            ${backend.debug.args}
                             --add-opens=java.base/java.lang=ALL-UNNAMED
                             --add-opens=java.base/java.io=ALL-UNNAMED
+                            -Djava.util.logging.config.file=${project.basedir}/cargo/logging.properties
                         </cargo.jvmargs>
                         <cargo.servlet.port>${tomcat.port}</cargo.servlet.port>
                         <cargo.logging>low</cargo.logging>
@@ -471,11 +461,6 @@
             </build>
             <dependencyManagement>
                 <dependencies>
-                    <dependency>
-                        <groupId>org.apache.httpcomponents</groupId>
-                        <artifactId>httpclient</artifactId>
-                        <version>${httpclient.version}</version>
-                    </dependency>
                     <!-- JUnit -->
                     <dependency>
                         <groupId>junit</groupId>
@@ -491,25 +476,13 @@
                     </dependency>
                     <!-- servlet -->
                     <dependency>
-                        <groupId>javax.servlet</groupId>
-                        <artifactId>javax.servlet-api</artifactId>
-                        <version>${javax.servlet-api.version}</version>
-                    </dependency>
-                    <!-- gzip compression filter -->
-                    <dependency>
-                        <groupId>net.sf.ehcache</groupId>
-                        <artifactId>ehcache-web</artifactId>
-                        <version>${ehcache-web.version}</version>
-                    </dependency>
-                    <!-- misc -->
-                    <dependency>
-                        <groupId>commons-pool</groupId>
-                        <artifactId>commons-pool</artifactId>
-                        <version>${commons-pool.version}</version>
+                        <groupId>jakarta.servlet</groupId>
+                        <artifactId>jakarta.servlet-api</artifactId>
+                        <version>${jakarta.servlet-api.version}</version>
                     </dependency>
                     <dependency>
-                        <groupId>javax.xml.ws</groupId>
-                        <artifactId>jaxws-api</artifactId>
+                        <groupId>jakarta.xml.ws</groupId>
+                        <artifactId>jakarta.xml.ws-api</artifactId>
                         <version>${jaxws-api.version}</version>
                     </dependency>
                 </dependencies>
