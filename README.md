@@ -26,6 +26,15 @@ You can start the development application locally:
 
 The application runs at `http://localhost:8081` afterwards. You will see, opening a map, the sample plugin on top of the map.
 
+MapStore does not ship default users anymore. To log in, set the `INITIAL_ADMIN_PASSWORD` environment variable before starting: the backend creates the `admin` account with that password on first start. The values `admin` and `user` are refused.
+
+```sh
+export INITIAL_ADMIN_PASSWORD='<your-dev-password>'
+npm start
+```
+
+Then log in as `admin` with the password you set. See [Initial Administrator Password](https://github.com/geosolutions-it/MapStore2/blob/2026.03.xx/docs/developer-guide/initial-admin-password.md) for details.
+
 ## Start creating your own extension
 
 If you have to create an extension, you will have to
