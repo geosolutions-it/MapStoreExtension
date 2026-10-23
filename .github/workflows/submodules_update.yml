@@ -1,23 +1,50 @@
-
 name: Update Submodules
 on:
-  # schedule:
-  # run daily at midnight
-  # - cron: '0 0 * * *'
-  # Allows you to run this workflow manually from the Actions tab
+  # Nightly: update master and the most recent stable branches (YYYY.MM.xx)
+  schedule:
+    - cron: '0 2 * * *'
+  # Manual: update only the branch selected in the Actions tab
   workflow_dispatch:
 
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+env:
+  # number of stable branches (YYYY.MM.xx, most recent first) updated by the nightly run, besides master
+  STABLE_BRANCHES: 1
 
-        # Uses the private access token from above link
+jobs:
+  branches:
+    runs-on: ubuntu-latest
+    outputs:
+      branches: ${{ steps.list.outputs.branches }}
+    steps:
+      - name: List branches to update
+        id: list
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            branches=$(jq -cn --arg b "${{ github.ref_name }}" '[$b]')
+          else
+            stable=$(gh api "repos/${{ github.repository }}/branches" --paginate --jq '.[].name' \
+              | grep -E '^[0-9]{4}\.[0-9]{2}\.xx$' | sort -r | head -n "$STABLE_BRANCHES")
+            branches=$(printf 'master\n%s\n' "$stable" | jq -Rcn '[inputs | select(length > 0)]')
+          fi
+          echo "Branches to update: $branches"
+          echo "branches=$branches" >> "$GITHUB_OUTPUT"
+
+  update:
+    needs: branches
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        branch: ${{ fromJSON(needs.branches.outputs.branches) }}
+    steps:
+      - uses: actions/checkout@v4
         with:
+          ref: ${{ matrix.branch }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Initialize or update each one recursively
+      # Each branch follows the MapStore2 branch set in its .gitmodules (master when not set)
       - name: Pull & update submodules recursively
         run: |
           git submodule update --init --recursive
@@ -25,13 +52,19 @@ jobs:
 
       # Commit to the repo under the GitHub actions user to ensure we have
       # reasonable logging to trace back
-      - name: Commit & push changes
+      - name: Commit changes
+        id: commit
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions - update submodules"
-          git commit -am "Update submodules" || echo "No changes to commit"
+          if git commit -am "Update submodules"; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No changes to commit"
+          fi
       - name: Push to protected branch
+        if: steps.commit.outputs.changed == 'true'
         uses: CasperWA/push-protected@v2
         with:
           token: ${{ secrets.PUSH_PROTECTED_BRANCH_TOKEN }} # This requires a special token to be able to trigger checks on new branch creation
-          ref: ${{ github.ref }}
+          branch: ${{ matrix.branch }}
