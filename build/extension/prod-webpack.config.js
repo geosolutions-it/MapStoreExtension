@@ -9,12 +9,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const {name} = require('../../config');
 const commons = require('./commons');
 
-// read version and produce a temporary updated index.json
+// read version and produce a temporary updated index.json, with the version of the extension and of its plugin
 const { version: versionText } = require('../../package.json');
 const indexSrc = path.resolve(__dirname, "..", "..", "assets", "index.json");
 const tmpIndex = path.resolve(__dirname, "..", "..", "assets", "index.json.tmp");
 try {
     const indexContent = JSON.parse(fs.readFileSync(indexSrc, 'utf8'));
+    indexContent.version = versionText;
     if (Array.isArray(indexContent.plugins)) {
         indexContent.plugins = indexContent.plugins.map(p => p && p.name === name ? { ...p, version: versionText } : p);
     }
