@@ -1,8 +1,14 @@
 {
+  "title": "Sample Extension",
+  "description": "A sample extension that adds a plugin to the toolbar",
+  "version": "@@VERSION@@",
   "plugins": [
     {
       "name": "SampleExtension",
+      "title": "Sample Extension",
+      "description": "A sample extension that adds a plugin to the toolbar",
       "version": "@@VERSION@@",
+      "glyph": "plus",
       "dependencies": [
         "Toolbar"
       ]
