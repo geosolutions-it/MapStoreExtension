@@ -18,6 +18,10 @@ on:
 
 concurrency: release-${{ github.ref }}
 
+# read-only by default, only the release job can write
+permissions:
+  contents: read
+
 jobs:
   check:
     runs-on: ubuntu-latest
