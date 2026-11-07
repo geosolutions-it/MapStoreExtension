@@ -60,7 +60,7 @@ You should not move or change the `js/extension/plugins/Extension.jsx` file, but
 
 Moreover you can edit:
 
-- `assets/index.json`: to customize extension dependencies.
+- `assets/index.json`: to customize extension dependencies, title and description. The `title`, `description` and `version` at the top level describe the extension, and MapStore shows them in the Extensions page of the manager (2027.01.00 or later), with the version of each plugin. The `glyph` of a plugin is its icon in the context creator and in the Extensions page. The build sets both versions from `version` in `package.json`. The context creator reads `title`, `description` and `version` of the first plugin, so keep them in the plugin entry too.
 - `assets/translations/`: to set up your translations.
 
 ### Build Extension
